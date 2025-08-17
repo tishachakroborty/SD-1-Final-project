@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Notes Taking App</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; background:#f4f4f4; margin:0; }
+        .container { max-width: 720px; margin: 40px auto; background:#fff; padding:24px; border-radius:12px; box-shadow: 0 10px 20px rgba(0,0,0,0.06); }
+        h1 { margin-top:0; text-align:center; }
+        form { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
+        input[type="text"] { flex:1; padding:10px; border:1px solid #ddd; border-radius:8px; }
+        button { padding:10px 16px; border:none; border-radius:8px; cursor:pointer; background:#16a34a; color:#fff; }
+        ul { list-style:none; padding:0; margin:0; }
+        li { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #eee; border-radius:8px; margin-bottom:8px; background:#fafafa; }
+        a.delete { text-decoration:none; padding:6px 10px; border-radius:6px; border:1px solid #ef4444; color:#ef4444; }
+        a.delete:hover { background:#fee2e2; }
+        .empty { text-align:center; color:#777; padding:16px 0; }
+        .footer { text-align:center; margin-top:20px; color:#666; font-size:14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📒 Notes Taking App</h1>
+        <form method="POST">
+            <input type="text" name="note" placeholder="Write your note..." required />
+            <button type="submit">Add Note</button>
+        </form>
+
+        {% if notes %}
+            <ul>
+                {% for note in notes %}
+                    <li>
+                        <span>{{ loop.index }}. {{ note }}</span>
+                        <a class="delete" href="{{ url_for('delete', index=loop.index0) }}">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty">No notes yet. Add your first note above.</div>
+        {% endif %}
+
+        <div class="footer">Made with Flask • Notes saved to <code>notes.txt</code></div>
+    </div>
+</body>
+</html>
